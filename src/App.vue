@@ -7,7 +7,7 @@
           <span class="log-text">稽查监控系统</span>
           <span style="font-size: 10px;">  2017 年 12 月 21 日    星期三    12`C   晴</span>
         </div>
-        <div style="float: right; padding: 20px; cursor: pointer;">
+        <div style="float: right; padding: 15px 20px; cursor: pointer;">
           <span class="logout"></span>
           <span style="font-size:15px;">退出</span>
         </div>
@@ -69,7 +69,7 @@
   }
 
   .top-menu {
-    height: 65px;
+    height: 54px;
     width: 100%;
     background: #5b79af;
     color: #FFFFFF;
@@ -77,7 +77,7 @@
 
   .top-menu .log {
     float: left;
-    padding: 18px 30px 0;
+    padding: 12px 30px 0;
   }
 
   .log .log-img {
@@ -135,7 +135,7 @@
     margin-top: 8px;
   }
 
-  .user-info .image{
+  .user-info .image {
     background: url("./assets/image/menu-photo.png") no-repeat;
     background-size: 100%;
     width: 40px;
@@ -146,37 +146,37 @@
     background-position: 2px 3px;
   }
 
-  .user-profile .image{
+  .user-profile .image {
     background: url("./assets/image/menu-profile.png") no-repeat;
     background-size: 100%;
   }
 
-  .affairs .image{
+  .affairs .image {
     background: url("./assets/image/menu-affairs.png") no-repeat;
     background-size: 100%;
   }
 
-  .audit .image{
+  .audit .image {
     background: url("./assets/image/menu-audit.png") no-repeat;
     background-size: 100%;
   }
 
-  .release .image{
+  .release .image {
     background: url("./assets/image/menu-release.png") no-repeat;
     background-size: 100%;
   }
 
-  .work-plan .image{
+  .work-plan .image {
     background: url("./assets/image/menu-work-plan.png") no-repeat;
     background-size: 100%;
   }
 
-  .statistics .image{
+  .statistics .image {
     background: url("./assets/image/menu-statistics.png") no-repeat;
     background-size: 100%;
   }
 
-  .system .image{
+  .system .image {
     background: url("./assets/image/menu-system.png") no-repeat;
     background-size: 100%;
   }
@@ -194,6 +194,83 @@
   .bottom-content .right-content {
     float: right;
     width: calc(100% - 120px);
+  }
+
+  .bread-crumbs {
+    padding: 10px 15px;
+    font-size: 12px;
+    box-shadow: 2px 2px 5px #e6e6e6;
+    z-index: 9;
+  }
+
+  .content-box {
+    background-color: #f7faff;
+    padding: 20px 35px;
+  }
+
+  .left-right-box {
+    width: 255px;
+    display: inline-block;
+    margin: 0;
+    margin-top: 15px;
+  }
+
+  .left-right-box .left-title {
+    width: 75px;
+    float: left;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 25px;
+  }
+
+  .left-right-box .right-content {
+    width: 160px;
+    margin: 0;
+    float: left;
+  }
+
+  .self-btn {
+    width: 80px;
+    height: 26px;
+    background-color: #5b79af;
+    font-size: 14px;
+    text-align: center;
+    color: #FFFFFF;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  a {
+    color: #0175ff;
+    text-decoration: none;
+  }
+
+  .list-box {
+    background-color: #FFFFFF;
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px #e6e6e6;
+  }
+
+  .self-table {
+    width: 100%;
+    border-spacing: 0;
+  }
+
+  .self-table thead tr {
+    height: 40px;
+    background-color: #f6f9fe;
+  }
+
+  .self-table thead tr th {
+    border-bottom: 1px solid rgb(246, 246, 246);
+    border-left: 1px solid rgb(240, 240, 240);
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  .self-table thead tr th:first-child {
+    border-left: none;
   }
 
   .display-flex {

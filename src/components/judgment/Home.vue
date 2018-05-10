@@ -26,7 +26,7 @@
             <span class="item-log"></span>
             <div class="item-text">临界车逃费</div>
           </div>
-          <div class="item etc-mtc">
+          <div class="item etc-mtc" v-on:click="goEtcMtc()">
             <span class="item-log"></span>
             <div class="item-text">ETC&MTC混合逃费</div>
           </div>
@@ -56,29 +56,22 @@
 </template>
 
 <script>
-  export default {
-    name: 'Judgment',
-    data() {
-      return {
-        msg: 'Welcome to Your Vue.js App'
-      }
+export default {
+  name: 'JudgmentHome',
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    goEtcMtc () {
+      this.$router.replace({path: '/etc'})
     }
   }
+}
 </script>
 
 <style scoped>
-  .bread-crumbs {
-    padding: 10px 15px;
-    font-size: 12px;
-    box-shadow: 2px 2px 5px #e6e6e6;
-    z-index: 9;
-  }
-
-  .content-box {
-    background-color: #f7faff;
-    padding: 20px 35px;
-  }
-
   .item-list-box {
 
   }
@@ -111,35 +104,35 @@
   }
 
   .blacklist .item-log {
-    background: url("../assets/image/item-blacklist.png") no-repeat;
+    background: url("../../assets/image/item-blacklist.png") no-repeat;
     background-size: 100%;
   }
   .counterfeit .item-log {
-    background: url("../assets/image/item-counterfeit.png") no-repeat;
+    background: url("../../assets/image/item-counterfeit.png") no-repeat;
     background-size: 100%;
   }
   .critical .item-log {
-    background: url("../assets/image/item-critical.png") no-repeat;
+    background: url("../../assets/image/item-critical.png") no-repeat;
     background-size: 100%;
   }
   .etc-mtc .item-log {
-    background: url("../assets/image/item-etc-mtc.png") no-repeat;
+    background: url("../../assets/image/item-etc-mtc.png") no-repeat;
     background-size: 100%;
   }
   .green .item-log {
-    background: url("../assets/image/item-green.png") no-repeat;
+    background: url("../../assets/image/item-green.png") no-repeat;
     background-size: 100%;
   }
   .model .item-log {
-    background: url("../assets/image/item-model.png") no-repeat;
+    background: url("../../assets/image/item-model.png") no-repeat;
     background-size: 100%;
   }
   .peer .item-log {
-    background: url("../assets/image/item-peer.png") no-repeat;
+    background: url("../../assets/image/item-peer.png") no-repeat;
     background-size: 100%;
   }
   .total .item-log {
-    background: url("../assets/image/item-total.png") no-repeat;
+    background: url("../../assets/image/item-total.png") no-repeat;
     background-size: 100%;
   }
 </style>
