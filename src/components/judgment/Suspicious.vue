@@ -6,7 +6,7 @@
       |
       <router-link to="/etc">ETC&MTC 逃费</router-link>
       |
-      <span>{{currentDetail.carNo}}</span>
+      <span>{{currentCarNo}}</span>
     </div>
     <div class="content-box flex-box-1 display-flex flow-y" style="padding: 15px 15px 0 15px;">
       <div class="flex-box-1">
@@ -156,7 +156,7 @@ export default {
     return {
       currentIndex: '',
       isShowDetail: false,
-      currentDetail: {},
+      currentCarNo: '',
       currentTab: 'all',
       currentDetailTab: 'desc',
       tableList: [],
@@ -164,12 +164,12 @@ export default {
     }
   },
   methods: {
-    searchList(){
+    searchList () {
       this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfoTrip/selectAll',
-        {params:{
-            carNo: this.$route.query.carNo,
-            carType: this.$route.query.carType
-          }}, {emulateJSON: true}).then((res) => {
+        {params: {
+          carNo: this.$route.query.carNo,
+          carType: this.$route.query.carType
+        }}, {emulateJSON: true}).then((res) => {
         this.tableList = res.data.data
       })
     },
@@ -192,42 +192,43 @@ export default {
         this.$alert(res.data.message)
       })
     },
-    review(){
-      this.$confirm("是否确认审核选择记录？").then(data=>{
-        if('success' === data){
+    review () {
+      this.$confirm('是否确认审核选择记录？').then(data => {
+        if (data === 'success') {
           this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfoTrip/check',
             {
               params: {carNo: this.selectedDetail.carNo, carType: this.selectedDetail.carType, associationFlagId: this.selectedDetail.associationFlagId}
             }, {emulateJSON: true}).then((res) => {
-              this.$alert(res.data.message)
-              if('SUCCESS' === res.data.status){
-                this.searchList();
-              }
+            this.$alert(res.data.message)
+            if (res.data.status === 'SUCCESS') {
+              this.searchList()
+            }
           })
         }
-      }).catch(fail=>{
+      }).catch(fail => {
 
       })
     },
-    deleteSuspicious(){
-      this.$confirm("是否确认审核选择记录？").then(data=>{
-        if('success' === data) {
+    deleteSuspicious () {
+      this.$confirm('是否确认审核选择记录？').then(data => {
+        if (data === 'success') {
           this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfoTrip/suspicious',
             {
               params: {carNo: this.selectedDetail.carNo, carType: this.selectedDetail.carType, associationFlagId: this.selectedDetail.associationFlagId}
             }, {emulateJSON: true}).then((res) => {
-              this.$alert(res.data.message)
-              if('SUCCESS' === res.data.status){
-                this.searchList();
-              }
+            this.$alert(res.data.message)
+            if (res.data.status === 'SUCCESS') {
+              this.searchList()
+            }
           })
         }
-      }).catch(fail=>{
+      }).catch(fail => {
 
       })
     }
   },
   created () {
+    this.currentCarNo = this.$route.query.carNo
     this.searchList()
   }
 }

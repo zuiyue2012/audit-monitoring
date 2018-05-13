@@ -88,11 +88,26 @@
           </div>
           <div class="filter-box">
             <dl class="left-right-box">
-              <dt class="left-title">车牌属地：</dt>
+              <dt class="left-title">车辆颜色：</dt>
               <dd class="right-content">
-                <self-select v-on:select="showProject"
-                             :selectedValue="loc"
-                             :dataList="locList"
+                <self-select :selectedValue="carLicenceColor"
+                             :dataList="colorList"
+                             :widthData="widthData"></self-select>
+              </dd>
+            </dl>
+            <dl class="left-right-box">
+              <dt class="left-title">车型：</dt>
+              <dd class="right-content">
+                <self-select :selectedValue="carType"
+                             :dataList="carTypeList"
+                             :widthData="widthData"></self-select>
+              </dd>
+            </dl>
+            <dl class="left-right-box">
+              <dt class="left-title">轴数：</dt>
+              <dd class="right-content">
+                <self-select :selectedValue="axesNumber"
+                             :dataList="axesList"
                              :widthData="widthData"></self-select>
               </dd>
             </dl>
@@ -171,6 +186,9 @@ export default {
       catList: [],
       locList: [],
       tableList: [],
+      colorList: [{key: '蓝色', value: '蓝色'}, {key: '红色', value: '红色'}, {key: '黑色', value: '黑色'}],
+      carTypeList: [{key: '客车', value: '客车'}, {key: '货车', value: '货车'}],
+      axesList: [{key: '1', value: '1'}, {key: '2', value: '2'}],
       highSpeed: {
         key: '',
         value: ''
@@ -184,6 +202,18 @@ export default {
         value: ''
       },
       loc: {
+        key: '',
+        value: ''
+      },
+      carLicenceColor: {
+        key: '',
+        value: ''
+      },
+      carType: {
+        key: '',
+        value: ''
+      },
+      axesNumber: {
         key: '',
         value: ''
       },
@@ -221,6 +251,15 @@ export default {
       if (this.endTime) {
         params.endDate = this.endTime
       }
+      if (this.isShowExact && this.carLicenceColor) {
+        params.carLicenceColor = this.carLicenceColor.key
+      }
+      if (this.isShowExact && this.carType) {
+        params.carType = this.carType.key
+      }
+      if (this.isShowExact && this.axesNumber) {
+        params.axesNumber = this.axesNumber.key
+      }
       return params
     },
     showDetail (item) {
@@ -242,6 +281,7 @@ export default {
           params: {carNo: item.carNo, carType: item.carType}
         }, {emulateJSON: true}).then((res) => {
         this.$alert(res.data.message)
+        this.searchList()
       })
     }
   },

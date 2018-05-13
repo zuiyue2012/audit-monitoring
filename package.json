@@ -17,6 +17,7 @@
     "vue": "^2.5.2",
     "vue-resource": "latest",
     "vue-router": "^3.0.1",
+    "vue-tree-halower": "^1.5.3",
     "wc-messagebox": "^1.9.9"
   },
   "devDependencies": {
