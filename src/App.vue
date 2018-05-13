@@ -273,6 +273,59 @@
     border-left: none;
   }
 
+  .self-table tbody tr {
+    height: 42px;
+  }
+
+  .self-table tbody tr:hover td{
+    background-color: #adbdd7;
+  }
+
+  .self-table tbody tr:nth-child(odd) {
+    background-color: #FFFFFF;
+  }
+
+  .self-table tbody tr:nth-child(even) {
+    background-color: #eef1f8;
+  }
+
+  .self-table tbody tr td {
+    text-align: center;
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  .table-btn-box {
+    float: left;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .table-btn-box .table-btn {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    vertical-align: top;
+    margin-top: 2px;
+    margin-right: 3px;
+  }
+
+  .table-btn-box .table-btn.add {
+    background: url("./assets/image/btn-add.png") no-repeat;
+    background-size: 12px 12px;
+    margin-top: 3px;
+  }
+
+  .table-btn-box .table-btn.history {
+    background: url("./assets/image/btn-history.png") no-repeat;
+    background-size: 14px 15px;
+    height: 15px;
+  }
+
+  .table-btn-box .table-btn-text{
+    color: #5b79af;
+  }
+
   .display-flex {
     display: -webkit-flex;
     display: flex;

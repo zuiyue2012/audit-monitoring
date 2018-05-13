@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-resource": "latest",
+    "vue-router": "^3.0.1",
+    "wc-messagebox": "^1.9.9"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -3,6 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueResource from 'vue-resource'
+import {Alert, Confirm, Toast} from 'wc-messagebox'
+import 'wc-messagebox/style.css'
+
+Vue.use(Alert)
+Vue.use(Confirm)
+Vue.use(Toast)
+Vue.use(VueResource)
 
 Vue.config.productionTip = false
 

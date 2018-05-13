@@ -85,6 +85,8 @@
     width: 240px;
     box-shadow: 2px 2px 8px #bdb8b8;
     z-index: 999;
+    position: absolute;
+    background-color: #FFFFFF;
   }
 
   .vue-datepicker-header {
