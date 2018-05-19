@@ -4,14 +4,14 @@
       <span>当前位置：</span>
       <router-link to="/">研判打逃</router-link>
       |
-      <span>研判打逃</span>
+      <span>{{this.$route.query.title}}</span>
     </div>
     <div class="content-box flex-box-1 display-flex flow-y" style="padding: 15px 15px 0 15px;">
       <div class="filter-box">
         <dl class="left-right-box">
           <dt class="left-title">高速名称：</dt>
           <dd class="right-content">
-            <self-select v-on:select="showProject"
+            <self-select v-on:select="highSpeedChanged"
                          :selectedValue="highSpeed"
                          :dataList="highSpeedList"
                          :widthData="widthData"></self-select>
@@ -27,12 +27,9 @@
           </dd>
         </dl>
         <dl class="left-right-box">
-          <dt class="left-title">客货车：</dt>
+          <dt class="left-title">车类别：</dt>
           <dd class="right-content">
-            <self-select v-on:select="showProject"
-                         :selectedValue="cat"
-                         :dataList="catList"
-                         :widthData="widthData"></self-select>
+            <v-select-tree :data='catTreeData' v-on:node-click="selectCat"/>
           </dd>
         </dl>
         <dl class="left-right-box">
@@ -47,7 +44,7 @@
         <dl class="left-right-box">
           <dt class="left-title">入库时间：</dt>
           <dd class="right-content">
-            <datepicker v-on:picked="startTimeSelect"></datepicker>
+            <datepicker v-on:picked="startTimeSelect" :moment="0"></datepicker>
           </dd>
         </dl>
         <dl class="left-right-box">
@@ -56,15 +53,14 @@
             <datepicker v-on:picked="endTimeSelect"></datepicker>
           </dd>
         </dl>
-        <!--<dl class="left-right-box">
+        <dl class="left-right-box">
           <dt class="left-title">单位选择：</dt>
-          <dd class="right-content">
-            <my-tree-select :selectedValue="projectName"
-            :treeData="treeData"
-            :widthData="widthData"></my-tree-select>
-            <tree-select :selectedValue="projectName" :treeData="treeData" :widthData="widthData"></tree-select>
+          <dd class="right-content" style="position: relative;">
+            <!--<v-tree ref='tree' :data='treeData'/>-->
+            <!--<v-select-tree :data='treeData' v-model="selectedNode"/>-->
+            <v-select-tree :data='orgTreeData' v-on:node-click="selectOrg"/>
           </dd>
-        </dl>-->
+        </dl>
         <dl class="left-right-box">
           <dt class="left-title">关键字：</dt>
           <dd class="right-content">
@@ -128,10 +124,11 @@
               可疑车辆统计
             </div>
           </div>
+          <div style="overflow: auto;">
           <table class="self-table">
             <thead>
             <tr>
-              <th><input type="checkbox"/>序号</th>
+              <th>序号</th>
               <th>车牌号</th>
               <th>卡印刷号</th>
               <th>车型</th>
@@ -157,11 +154,12 @@
             </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
-      <div style="text-align: center; color: #5e5e5e; font-size: 8px;">
+     <!-- <div style="text-align: center; color: #5e5e5e; font-size: 8px;">
         <span>@2018 睿盈源科技版权所有V1.0.0.0          服务电话：028-62084609</span>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -169,13 +167,10 @@
 <script>
 import SelfSelect from '../common/SelfSelect'
 import datepicker from '../common/datepicker.vue'
-import TreeSelect from '../common/TreeSelect'
-import Tree from '../common/treeData'
 
 export default {
   name: 'JudgmentEtcMtc',
   components: {
-    TreeSelect,
     SelfSelect,
     datepicker
   },
@@ -197,10 +192,8 @@ export default {
         key: '',
         value: ''
       },
-      cat: {
-        key: '',
-        value: ''
-      },
+      cat: '',
+      org: '',
       loc: {
         key: '',
         value: ''
@@ -220,11 +213,29 @@ export default {
       startTime: '',
       endTime: '',
       widthData: '160px',
-      treeData: Tree.data,
-      isShowExact: false
+      isShowExact: false,
+      catTreeData: [{title: ''}],
+      orgTreeData: [{title: ''}],
     }
   },
   methods: {
+    selectCat(value){
+      console.log('selected: ', value)
+      this.cat = value.title
+    },
+    selectOrg(value){
+      console.log('selected: ', value)
+      this.org = value.id
+    },
+    highSpeedChanged(){
+      this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carStation/station', {highspeedName: this.highSpeed.key}, {emulateJSON: true}).then((res) => {
+        if (res.data && res.data.length) {
+          for (let toll of res.data) {
+            this.tollList.push({key: toll, value: toll})
+          }
+        }
+      })
+    },
     exactSearch(){
       this.isShowExact = true
     },
@@ -239,14 +250,20 @@ export default {
     },
     getPrams () {
       let params = {}
-      if (this.cat.key) {
-        params.carCategory = this.cat.key
+      if (this.highSpeed.key) {
+        params.highSpeed = this.highSpeed.key
+      }
+      if (this.cat) {
+        params.carCategory = this.cat
       }
       if (this.loc.key) {
         params.carNoLocation = this.loc.key
       }
       if (this.startTime) {
         params.startDate = this.startTime
+      }
+      if (this.org) {
+        params.org = this.org
       }
       if (this.endTime) {
         params.endDate = this.endTime
@@ -263,7 +280,7 @@ export default {
       return params
     },
     showDetail (item) {
-      this.$router.replace({path: '/suspicious', query: {carNo: item.carNo, carType: item.carType}})
+      this.$router.replace({path: '/suspicious', query: {carFlag: item.carFlag, parentTitle: this.$route.query.title}})
     },
     showProject () {
       // console.log('213122' + this.projectName.value)
@@ -278,30 +295,53 @@ export default {
     addDark (item) {
       this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfo/addBlackList',
         {
-          params: {carNo: item.carNo, carType: item.carType}
+          carFlag: item.carFlag
         }, {emulateJSON: true}).then((res) => {
         this.$alert(res.data.message)
         this.searchList()
       })
+    },
+    formatTreeData(treeNode){
+      treeNode.title = treeNode.name;
+      if(treeNode.children && treeNode.children.length){
+        for(let node of treeNode.children){
+          this.formatTreeData(node)
+        }
+      }
+    },
+    formatOrgTreeData(treeNode){
+      treeNode.id = treeNode.orgId;
+      treeNode.title = treeNode.orgName;
+      if(treeNode.children && treeNode.children.length){
+        for(let node of treeNode.children){
+          this.formatOrgTreeData(node)
+        }
+      }
     }
   },
   created () {
     this.searchList()
-    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfo/highSpeed', {}, {emulateJSON: true}).then((res) => {
+    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/category/tree', {}, {emulateJSON: true}).then((res) => {
+      if (res.data) {
+        this.formatTreeData(res.data)
+        this.catTreeData = [res.data]
+      }
+    })
+    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carOrg/tree', {}, {emulateJSON: true}).then((res) => {
+      if (res.data) {
+        this.formatOrgTreeData(res.data)
+        this.orgTreeData = [res.data]
+        console.log('treeData: ', this.orgTreeData)
+      }
+    })
+    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carStation/highSpeed', {}, {emulateJSON: true}).then((res) => {
       if (res.data && res.data.length) {
         for (let highSpeed of res.data) {
           this.highSpeedList.push({key: highSpeed, value: highSpeed})
         }
       }
     })
-    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfoTrip/station', {}, {emulateJSON: true}).then((res) => {
-      if (res.data && res.data.length) {
-        for (let toll of res.data) {
-          this.tollList.push({key: toll, value: toll})
-        }
-      }
-    })
-    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/carInfo/listCat', {}, {emulateJSON: true}).then((res) => {
+    this.$http.post('http://47.96.250.153:8080/audit-0.0.1-SNAPSHOT/api/category/tree', {}, {emulateJSON: true}).then((res) => {
       if (res.data && res.data.length) {
         for (let cat of res.data) {
           this.catList.push({key: cat, value: cat})

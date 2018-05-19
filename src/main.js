@@ -6,6 +6,10 @@ import router from './router'
 import VueResource from 'vue-resource'
 import {Alert, Confirm, Toast} from 'wc-messagebox'
 import 'wc-messagebox/style.css'
+import 'vue-tree-halower/dist/halower-tree.min.css'
+import {VTree, VSelectTree} from 'vue-tree-halower'
+Vue.use (VTree)
+Vue.use (VSelectTree)
 
 Vue.use(Alert)
 Vue.use(Confirm)

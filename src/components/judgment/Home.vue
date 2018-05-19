@@ -10,19 +10,19 @@
           逃费类型
         </div>
         <div class="display-flex flow-x" style="padding: 20px 30px;flex-wrap: wrap;">
-          <div class="item total">
+          <div class="item total" v-on:click="goTotal()">
             <span class="item-log"></span>
             <div class="item-text">全计重逃费</div>
           </div>
-          <div class="item peer">
+          <div class="item peer" v-on:click="goPeer()">
             <span class="item-log"></span>
             <div class="item-text">非正常同行逃费</div>
           </div>
-          <div class="item counterfeit">
+          <div class="item counterfeit" v-on:click="goCounterfeit()">
             <span class="item-log"></span>
             <div class="item-text">假冒优惠车逃费</div>
           </div>
-          <div class="item critical">
+          <div class="item critical" v-on:click="goCritical()">
             <span class="item-log"></span>
             <div class="item-text">临界车逃费</div>
           </div>
@@ -30,7 +30,7 @@
             <span class="item-log"></span>
             <div class="item-text">ETC&MTC混合逃费</div>
           </div>
-          <div class="item green">
+          <div class="item green" v-on:click="goGreen()">
             <span class="item-log"></span>
             <div class="item-text">假冒绿通行逃费</div>
           </div>
@@ -64,14 +64,34 @@ export default {
     }
   },
   methods: {
+    goTotal () {
+      this.$router.replace({path: '/etc', query: {title: '全计重逃费'}})
+    },
+    goPeer () {
+      this.$router.replace({path: '/etc', query: {title: '非正常同行逃费'}})
+    },
+    goCounterfeit () {
+      this.$router.replace({path: '/etc', query: {title: '假冒优惠车逃费'}})
+    },
+    goCritical () {
+      this.$router.replace({path: '/etc', query: {title: '临界车逃费'}})
+    },
     goEtcMtc () {
-      this.$router.replace({path: '/etc'})
+      this.$router.replace({path: '/etc', query: {title: 'ETC\&MTC混合逃费'}})
+    },
+    goGreen () {
+      this.$router.replace({path: '/etc', query: {title: '假冒绿通行逃费'}})
     }
   }
 }
 </script>
 
 <style scoped>
+  .disabled{
+    opacity: 0.5;
+    cursor: auto;
+  }
+
   .item-list-box {
 
   }

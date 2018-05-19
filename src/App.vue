@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="height: 100%;">
     <div class="framework-panel">
       <div class="top-menu">
         <div class="log">
@@ -12,7 +12,7 @@
           <span style="font-size:15px;">退出</span>
         </div>
       </div>
-      <div class="bottom-content display-flex flow-x">
+      <div class="bottom-content">
         <div class="left-menu">
           <div style="margin-bottom: 6px;">职位名称</div>
           <div class="item user-info" style="height: 70px;">
@@ -48,7 +48,7 @@
             <div class="text">系统维护</div>
           </div>
         </div>
-        <div class="flex-box-1">
+        <div class="" style="width: calc(100% - 120px);float: left;height: 100%;">
           <router-view/>
         </div>
       </div>
@@ -63,6 +63,26 @@
 </script>
 
 <style>
+  .tree-container{
+    height: 26px !important;
+  }
+
+  .tag-box-container{
+    height: 26px !important;
+  }
+
+  .tag {
+    height: 26px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    line-height: 26px !important;
+  }
+  .tree-box {
+    position: relative !important;
+    width: 300px !important;
+    background-color: #fff !important;
+    z-index: 99;
+  }
   .framework-panel {
     width: 100%;
     height: 100%;
@@ -109,6 +129,7 @@
 
   .bottom-content {
     width: 100%;
+    height: calc(100% - 54px);
   }
 
   .bottom-content .left-menu {
@@ -119,6 +140,8 @@
     text-align: center;
     font-size: 14px;
     padding: 12px 0;
+    height: calc(100% - 24px);
+    min-height: 650px;
   }
 
   .left-menu .item {
